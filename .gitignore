@@ -1,0 +1,6 @@
+credentials.json
+*.pickle
+tt*.py
+NOTES
+TODO
+*.mo
