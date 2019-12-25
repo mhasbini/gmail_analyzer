@@ -187,34 +187,16 @@ class Analyzer:
 
     def _load_table(self, event):
         table = agate.Table.from_object(list(self.processor.messagesQueue))
+
         event.set()
-        return table
 
-    def analyse(self):
-        """
-        read from the messages queue, and generate:
-        1. Counter for From field
-        2. Counter for Time field (by hour)
-        """
+        self.table = table
 
-        # {'id': '16f39fe119ee8427', 'labels': ['UNREAD', 'CATEGORY_UPDATES', 'INBOX'], 'fields': {'from': 'Coursera <no-reply@t.mail.coursera.org>', 'date': 'Tue, 24 Dec 2019 22:13:09 +0000'}}
+        return
 
-        progress = Spinner("Loading messages ")
-
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            event = Event()
-
-            future = executor.submit(self._load_table, event)
-
-            while not event.isSet():
-                progress.next()
-                time.sleep(.1)
-
-            table = future.result()
-            progress.finish()
-
+    def _analyze_from(self, event):
         data = (
-            table.pivot("fields/from")
+            self.table.pivot("fields/from")
             .where(lambda row: row["fields/from"] is not None)
             .order_by("Count", reverse=True)
             .limit(20)
@@ -225,7 +207,47 @@ class Analyzer:
         data_keys = list(_values[0].values())
         data_count = [[i] for i in list(map(int, list(_values[1].values())))]
 
-        print("# Senders\n")
+        event.set()
+
+        return data_keys, data_count
+
+    def analyse(self):
+        """
+        read from the messages queue, and generate:
+        1. Counter for From field
+        2. Counter for Time field (by hour)
+        """
+
+        # {'id': '16f39fe119ee8427', 'labels': ['UNREAD', 'CATEGORY_UPDATES', 'INBOX'], 'fields': {'from': 'Coursera <no-reply@t.mail.coursera.org>', 'date': 'Tue, 24 Dec 2019 22:13:09 +0000'}}
+
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            progress = Spinner("Loading messages ")
+
+            load_table_event = Event()
+
+            load_table_future = executor.submit(self._load_table, load_table_event)
+
+            while not load_table_event.isSet():
+                progress.next()
+                time.sleep(.1)
+
+            progress.finish()
+
+            progress = Spinner("Analysing senders ")
+
+            _analyze_from_event = Event()
+
+            _analyze_from_future = executor.submit(self._analyze_from, _analyze_from_event)
+
+            while not _analyze_from_event.isSet():
+                progress.next()
+                time.sleep(.1)
+
+            data_keys, data_count = _analyze_from_future.result()
+
+            progress.finish()
+
+        print("\n# Senders\n")
         args = {
             "stacked": False,
             "width": 50,
@@ -236,7 +258,7 @@ class Analyzer:
             "different_scale": False,
         }
 
-        chart(colors=[], data=data_count, args=args, labels=data_keys)
+        chart(colors=[92], data=data_count, args=args, labels=data_keys)
 
     def start(self):
         messages = self.processor.get_messages()
