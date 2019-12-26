@@ -36,7 +36,7 @@ class Processor:
         est_max = response["resultSizeEstimate"] * 5
 
         # progress = IncrementalBar('Fetching messages'.ljust(_progressPadding, ' '), max=est_max, suffix="elapsed: %(elapsed)ds - eta: %(eta)ds")
-        progress = Counter(f"{helpers.loader_icn} Fetching messages page".ljust(_progressPadding, " "))
+        progress = Counter(f"{helpers.loader_icn} Fetching messages page ".ljust(_progressPadding, " "))
 
         if "messages" in response:
             messages.extend(response["messages"])
@@ -101,7 +101,7 @@ class Processor:
                 return
 
         progress = IncrementalBar(
-            f"{helpers.loader_icn} Fetching messages meta data".ljust(_progressPadding, " "),
+            f"{helpers.loader_icn} Fetching messages meta data ".ljust(_progressPadding, " "),
             max=len(messages),
         )
 
