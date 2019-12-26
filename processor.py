@@ -95,10 +95,10 @@ class Processor:
         #   ]
         # }
 
-        if os.path.exists("success.pickle"):
-            with open("success.pickle", "rb") as token:
-                self.messagesQueue = pickle.load(token)
-                return
+        # if os.path.exists("success.pickle"):
+        #     with open("success.pickle", "rb") as token:
+        #         self.messagesQueue = pickle.load(token)
+        #         return
 
         progress = IncrementalBar(
             f"{helpers.loader_icn} Fetching messages meta data ".ljust(_progressPadding, " "),
