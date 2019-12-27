@@ -4,5 +4,9 @@ tt*.py
 NOTES
 TODO
 *.mo
-*.pyc
-__pycache__/*
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+target/
+.DS_Store
