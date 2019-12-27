@@ -2,7 +2,7 @@ import argparse
 import sys
 import colorama
 
-from metrics import Metrics
+from src.metrics import Metrics
 
 VERSION = "0.0.1"
 

@@ -3,9 +3,9 @@ import os.path
 import pickle
 from progress.counter import Counter
 from progress.bar import IncrementalBar
-import helpers
 
-from service import Service
+from src import helpers
+from src.service import Service
 
 _progressPadding = 29
 

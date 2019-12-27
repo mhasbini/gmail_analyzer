@@ -10,7 +10,6 @@ class Service:
         self.scopes = ["https://www.googleapis.com/auth/gmail.readonly"]
 
     def instance(self):
-        return True
         service = build("gmail", "v1", credentials=self._get_creds())
 
         return service
@@ -31,7 +30,7 @@ class Service:
                 creds.refresh(Request())
             else:
                 flow = InstalledAppFlow.from_client_secrets_file(
-                    "credentials.json", self.scopes
+                    "src/credentials.json", self.scopes
                 )
                 creds = flow.run_local_server(port=0)
 

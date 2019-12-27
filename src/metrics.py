@@ -7,9 +7,9 @@ import warnings
 import concurrent.futures
 from threading import Event
 import termtables
-import helpers
 
-from processor import Processor
+from src import helpers
+from src.processor import Processor
 
 
 class Metrics:
