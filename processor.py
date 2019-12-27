@@ -23,10 +23,10 @@ class Processor:
         # Output format:
         # [{'id': '13c...7', 'threadId': '13c...7'}, ...]
 
-        if os.path.exists("messages.pickle"):
-            with open("messages.pickle", "rb") as token:
-                messages = pickle.load(token)
-                return messages
+        # if os.path.exists("messages.pickle"):
+        #     with open("messages.pickle", "rb") as token:
+        #         messages = pickle.load(token)
+        #         return messages
 
         # includeSpamTrash
         # labelIds
@@ -96,10 +96,10 @@ class Processor:
         #   ]
         # }
 
-        if os.path.exists("success.pickle"):
-            with open("success.pickle", "rb") as token:
-                self.messagesQueue = pickle.load(token)
-                return
+        # if os.path.exists("success.pickle"):
+        #     with open("success.pickle", "rb") as token:
+        #         self.messagesQueue = pickle.load(token)
+        #         return
 
         progress = IncrementalBar(
             f"{helpers.loader_icn} Fetching messages meta data ".ljust(
