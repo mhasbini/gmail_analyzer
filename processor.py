@@ -30,13 +30,11 @@ class Processor:
 
         # includeSpamTrash
         # labelIds
-        # https://developers.google.com/resources/api-libraries/documentation/gmail/v1/python/latest/gmail_v1.users.messages.html#list
 
         response = self.service.users().messages().list(userId=self.user_id).execute()
         messages = []
         est_max = response["resultSizeEstimate"] * 5
 
-        # progress = IncrementalBar('Fetching messages'.ljust(_progressPadding, ' '), max=est_max, suffix="elapsed: %(elapsed)ds - eta: %(eta)ds")
         progress = Counter(
             f"{helpers.loader_icn} Fetching messages page ".ljust(_progressPadding, " ")
         )

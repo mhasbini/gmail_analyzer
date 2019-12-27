@@ -13,6 +13,7 @@ def remove_dup_timezone(date_str):
 
 
 def convert_date(date_str):
+    # Dates comes multiple formats, this function tries to guess it
     clean_date = remove_dup_timezone(date_str)
 
     _val = None
