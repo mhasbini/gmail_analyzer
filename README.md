@@ -1,4 +1,4 @@
-# Gmail analyzer
+# Gmail Analyzer
 
 ![screenshot](screenshots/tool.png)
 
@@ -10,7 +10,10 @@ This tool will analyze your gmail account to show you statics of your emails. e.
 - Top senders
 - Distribution of emails by years
 
-There are manu things that can be added, feel free to contribute (or open a ticket!).
+There are many metrics that can be added, feel free to contribute (or open a ticket!).
+
+More information in [this blog post](https://mhasbini.com/blog/introducing-gmail-analyzer.html).
+
 
 # Installation
 
