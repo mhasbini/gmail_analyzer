@@ -4,3 +4,5 @@ tt*.py
 NOTES
 TODO
 *.mo
+*.pyc
+__pycache__/*

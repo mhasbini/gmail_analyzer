@@ -4,11 +4,13 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
+
 class Service:
     def __init__(self):
         self.scopes = ["https://www.googleapis.com/auth/gmail.readonly"]
 
     def instance(self):
+        return True
         service = build("gmail", "v1", credentials=self._get_creds())
 
         return service

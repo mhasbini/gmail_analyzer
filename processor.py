@@ -9,6 +9,7 @@ from service import Service
 
 _progressPadding = 29
 
+
 class Processor:
     # Talk to google api, fetch results and decorate them
     def __init__(self):
@@ -22,10 +23,10 @@ class Processor:
         # Output format:
         # [{'id': '13c...7', 'threadId': '13c...7'}, ...]
 
-        # if os.path.exists("messages.pickle"):
-        #     with open("messages.pickle", "rb") as token:
-        #         messages = pickle.load(token)
-        #         return messages
+        if os.path.exists("messages.pickle"):
+            with open("messages.pickle", "rb") as token:
+                messages = pickle.load(token)
+                return messages
 
         # includeSpamTrash
         # labelIds
@@ -36,7 +37,9 @@ class Processor:
         est_max = response["resultSizeEstimate"] * 5
 
         # progress = IncrementalBar('Fetching messages'.ljust(_progressPadding, ' '), max=est_max, suffix="elapsed: %(elapsed)ds - eta: %(eta)ds")
-        progress = Counter(f"{helpers.loader_icn} Fetching messages page ".ljust(_progressPadding, " "))
+        progress = Counter(
+            f"{helpers.loader_icn} Fetching messages page ".ljust(_progressPadding, " ")
+        )
 
         if "messages" in response:
             messages.extend(response["messages"])
@@ -95,13 +98,15 @@ class Processor:
         #   ]
         # }
 
-        # if os.path.exists("success.pickle"):
-        #     with open("success.pickle", "rb") as token:
-        #         self.messagesQueue = pickle.load(token)
-        #         return
+        if os.path.exists("success.pickle"):
+            with open("success.pickle", "rb") as token:
+                self.messagesQueue = pickle.load(token)
+                return
 
         progress = IncrementalBar(
-            f"{helpers.loader_icn} Fetching messages meta data ".ljust(_progressPadding, " "),
+            f"{helpers.loader_icn} Fetching messages meta data ".ljust(
+                _progressPadding, " "
+            ),
             max=len(messages),
         )
 
